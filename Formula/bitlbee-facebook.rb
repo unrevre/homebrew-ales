@@ -7,10 +7,10 @@ class BitlbeeFacebook < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
+  depends_on "bitlbee" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
 
-  depends_on "bitlbee"
   depends_on "glib"
   depends_on "json-glib"
 
