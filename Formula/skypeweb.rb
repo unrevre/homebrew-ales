@@ -1,20 +1,16 @@
 class Skypeweb < Formula
-  desc "Skype Plugin for Pidgin, libpurple and more"
-  homepage "https://github.com/EionRobb/skype4pidgin/tree/master/skypeweb#skypeweb-plugin-for-pidgin"
+  desc "Skype plugin for libpurple"
+  homepage "https://github.com/EionRobb/skype4pidgin/tree/master/skypeweb"
   head "https://github.com/EionRobb/skype4pidgin.git"
   url "https://github.com/EionRobb/skype4pidgin/archive/1.5.tar.gz"
   sha256 "bb5fc550bff8f66f90a9ffacfc6bc2ed50fee86f4f500942aebc315d073f6e9d"
 
   depends_on "pkg-config" => :build
-
-  depends_on "libpurple"
   depends_on "json-glib"
+  depends_on "libpurple"
 
   def install
     chdir "skypeweb" do
-      system "sed -i '' 's|`$(PKG_CONFIG) --variable=plugindir purple`|/lib/purple-2|' Makefile"
-      system "sed -i '' 's|`$(PKG_CONFIG) --variable=datadir purple`|/share|g' Makefile"
-
       system "make"
       system "make", "install", "DESTDIR=#{prefix}"
     end
