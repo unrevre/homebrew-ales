@@ -2,8 +2,6 @@ class Skypeweb < Formula
   desc "Skype plugin for libpurple"
   homepage "https://github.com/EionRobb/skype4pidgin/tree/master/skypeweb"
   head "https://github.com/EionRobb/skype4pidgin.git"
-  url "https://github.com/EionRobb/skype4pidgin/archive/1.5.tar.gz"
-  sha256 "bb5fc550bff8f66f90a9ffacfc6bc2ed50fee86f4f500942aebc315d073f6e9d"
 
   depends_on "pkg-config" => :build
   depends_on "json-glib"
