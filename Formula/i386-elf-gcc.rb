@@ -1,9 +1,9 @@
 class I386ElfGcc < Formula
   desc "GNU compiler collection, targeting i386-elf, for C"
   homepage "https://gcc.gnu.org/"
-  url "https://ftp.gnu.org/gnu/gcc/gcc-9.2.0/gcc-9.2.0.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gcc/gcc-9.2.0/gcc-9.2.0.tar.xz"
-  sha256 "ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
+  url "https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz"
+  sha256 "b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c"
   head "https://gcc.gnu.org/git/gcc.git"
 
   depends_on "isl"
@@ -47,6 +47,7 @@ class I386ElfGcc < Formula
       }
     EOS
     system "#{bin}/i386-elf-gcc", "-c", "-o", "test-c.o", "test-c.c"
-    assert_match "file format elf32-i386", shell_output("#{Formula["i386-elf-binutils"].bin}/i386-elf-objdump -a test-c.o")
+    assert_match "file format elf32-i386",
+      shell_output("#{Formula["i386-elf-binutils"].bin}/i386-elf-objdump -a test-c.o")
   end
 end
