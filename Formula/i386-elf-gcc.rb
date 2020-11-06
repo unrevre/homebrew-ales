@@ -6,7 +6,6 @@ class I386ElfGcc < Formula
   sha256 "b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c"
   head "https://gcc.gnu.org/git/gcc.git"
 
-  depends_on "isl"
   depends_on "gmp"
   depends_on "unrevre/ales/i386-elf-binutils"
   depends_on "libmpc"
@@ -23,6 +22,7 @@ class I386ElfGcc < Formula
       --with-as=#{Formula["i386-elf-binutils"].bin}/i386-elf-as
       --with-ld=#{Formula["i386-elf-binutils"].bin}/i386-elf-ld
       --without-headers
+      --without-isl
       --disable-multilib
       --disable-nls
     ]
@@ -34,6 +34,9 @@ class I386ElfGcc < Formula
       system "make", "all-target-libgcc"
       system "make", "install-gcc"
       system "make", "install-target-libgcc"
+
+      # FSF-related man pages may conflict with native gcc
+      (share/"man/man7").rmtree
     end
   end
 
