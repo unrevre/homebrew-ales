@@ -6,7 +6,8 @@ class I386ElfGdb < Formula
   sha256 "f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0"
   head "https://sourceware.org/git/binutils-gdb.git"
 
-  depends_on "pkg-config" => :build
+  depends_on "python@3.9"
+  depends_on "xz"
 
   def install
     target = "i386-elf"
@@ -15,6 +16,10 @@ class I386ElfGdb < Formula
       --target=#{target}
       --prefix=#{prefix}
       --disable-binutils
+      --disable-debug
+      --disable-dependency-tracking
+      --with-lzma
+      --with-python=#{Formula["python@3.9"].opt_bin}/python3
     ]
 
     mkdir "build" do
