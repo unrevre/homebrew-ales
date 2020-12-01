@@ -56,6 +56,6 @@ class Skhd < Formula
   end
 
   test do
-    assert_match "skhd #{version}", shell_output("#{bin}/skhd --version")
+    assert_match "skhd version #{version}", shell_output("#{bin}/skhd --version")
   end
 end

@@ -46,6 +46,56 @@ class Libpurple < Formula
   end
 
   test do
-    system "#{bin}/finch", "--version"
+    system "true"
+  end
+  test do
+    (testpath/"test.cpp").write <<~EOS
+      #include <purple.h>
+
+      #include <stdio.h>
+
+      static void network_disconnected(void)
+      {
+        printf("network disconnected\\n");
+      }
+
+      static PurpleConnectionUiOps null_conn_uiops =
+      {
+        NULL,                 /* connect_progress         */
+        NULL,                 /* connected                */
+        NULL,                 /* disconnected             */
+        NULL,                 /* notice                   */
+        NULL,                 /* report_disconnect        */
+        NULL,                 /* network_connected        */
+        network_disconnected, /* network_disconnected     */
+        NULL,                 /* report_disconnect_reason */
+      };
+
+      static void
+      null_ui_init(void)
+      {
+        purple_connections_set_ui_ops(&null_conn_uiops);
+      }
+
+      static PurpleCoreUiOps null_core_uiops =
+      {
+        .ui_init = null_ui_init,
+      };
+
+      int main(int argc, char **argv)
+      {
+        purple_core_set_ui_ops(&null_core_uiops);
+
+        return 0;
+      }
+    EOS
+    glib = Formula["glib"]
+    system ENV.cxx, "-I#{include}/libpurple",
+                    "-I#{glib.opt_include}/glib-2.0",
+                    "-I#{glib.opt_lib}/glib-2.0/include",
+                    "-L#{lib}", "-L#{glib.opt_lib}",
+                    "-lpurple", "-lglib-2.0",
+                    testpath/"test.cpp", "-o", "test"
+    system "./test"
   end
 end
