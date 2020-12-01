@@ -1,0 +1,80 @@
+diff --git a/src/feature.h b/src/feature.h
+index 8f7322bef..0a5559444 100644
+--- a/src/feature.h
++++ b/src/feature.h
+@@ -169,7 +169,7 @@
+  * +keymap		'keymap' option.  Allows you to map typed keys in
+  *			Insert mode for a special language.
+  */
+-#ifdef FEAT_BIG
++#ifdef FEAT_HUGE
+ # define FEAT_KEYMAP
+ #endif
+ 
+@@ -257,7 +257,7 @@
+  * +emacs_tags		When FEAT_EMACS_TAGS defined: Include support for
+  *			emacs style TAGS file.
+  */
+-#ifdef FEAT_BIG
++#ifdef FEAT_HUGE
+ # define FEAT_EMACS_TAGS
+ #endif
+ 
+@@ -342,7 +342,7 @@
+  * +printer		":hardcopy" command
+  * +postscript		Printing uses PostScript file output.
+  */
+-#if defined(FEAT_NORMAL) && (defined(MSWIN) || defined(FEAT_EVAL)) \
++#if defined(FEAT_HUGE) && (defined(MSWIN) || defined(FEAT_EVAL)) \
+ 	&& !defined(AMIGA)
+ # define FEAT_PRINTER
+ #endif
+@@ -483,7 +483,7 @@
+ /*
+  * +cryptv		Encryption (by Mohsin Ahmed <mosh@sasi.com>).
+  */
+-#if defined(FEAT_NORMAL) && !defined(FEAT_CRYPT) || defined(PROTO)
++#if defined(FEAT_HUGE) && !defined(FEAT_CRYPT) || defined(PROTO)
+ # define FEAT_CRYPT
+ #endif
+ 
+@@ -500,7 +500,7 @@
+  * +gettext		Message translations (requires +multi_lang)
+  *			(only when "lang" archive unpacked)
+  */
+-#ifdef FEAT_NORMAL
++#ifdef FEAT_HUGE
+ # define FEAT_MULTI_LANG
+ #endif
+ #if defined(HAVE_GETTEXT) && defined(FEAT_MULTI_LANG) \
+@@ -945,13 +945,13 @@
+ // Amiga console has no mouse support
+ #if defined(UNIX) || defined(VMS)
+ # define FEAT_MOUSE_XTERM
+-# ifdef FEAT_BIG
++# ifdef FEAT_HUGE
+ #  define FEAT_MOUSE_NET
+ # endif
+-# ifdef FEAT_BIG
++# ifdef FEAT_HUGE
+ #  define FEAT_MOUSE_DEC
+ # endif
+-# ifdef FEAT_BIG
++# ifdef FEAT_HUGE
+ #  define FEAT_MOUSE_URXVT
+ # endif
+ #endif
+@@ -969,11 +969,11 @@
+  * FEAT_MOUSE_JSB
+  * FEAT_MOUSE_PTERM
+  */
+-#if defined(FEAT_NORMAL) && defined(HAVE_GPM)
++#if defined(FEAT_HUGE) && defined(HAVE_GPM)
+ # define FEAT_MOUSE_GPM
+ #endif
+ 
+-#if defined(FEAT_NORMAL) && defined(HAVE_SYSMOUSE)
++#if defined(FEAT_HUGE) && defined(HAVE_SYSMOUSE)
+ # define FEAT_SYSMOUSE
+ #endif
+ 
