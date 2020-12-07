@@ -14,6 +14,7 @@ class Lilypond < Formula
   depends_on "fontforge" => :build
   depends_on "t1utils" => :build
   depends_on "texinfo" => :build
+  depends_on "extractpdfmark"
   depends_on "fontconfig"
   depends_on "freetype"
   depends_on "gettext"
