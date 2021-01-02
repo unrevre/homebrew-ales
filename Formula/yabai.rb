@@ -1,7 +1,7 @@
 class Yabai < Formula
   desc "A tiling window manager for macOS based on binary space partitioning."
   homepage "https://github.com/unrevre/yabai"
-  head "https://github.com/unrevre/yabai.git", :branch => "zsplit"
+  head "https://github.com/unrevre/yabai.git", :branch => "private"
 
   depends_on :macos => :high_sierra
 
