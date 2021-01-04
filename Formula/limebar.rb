@@ -6,8 +6,6 @@ class Limebar < Formula
   def install
     system "make"
     bin.install "bin/limebar"
-
-    (var/"log/limebar").mkpath
   end
 
   def plist; <<~EOS
@@ -30,10 +28,6 @@ class Limebar < Formula
       <true/>
       <key>KeepAlive</key>
       <true/>
-      <key>StandardOutPath</key>
-      <string>#{var}/log/limebar/limebar.out.log</string>
-      <key>StandardErrorPath</key>
-      <string>#{var}/log/limebar/limebar.err.log</string>
     </dict>
     </plist>
     EOS
