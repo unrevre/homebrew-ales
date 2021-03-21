@@ -1,7 +1,16 @@
 diff --git a/src/feature.h b/src/feature.h
-index 8f7322bef..0a5559444 100644
+index 5f6f800c2..21401dd43 100644
 --- a/src/feature.h
 +++ b/src/feature.h
+@@ -161,7 +161,7 @@
+  *			keyboard in a special language mode, e.g. for typing
+  *			greek.
+  */
+-#ifdef FEAT_BIG
++#ifdef FEAT_HUGE
+ # define FEAT_LANGMAP
+ #endif
+ 
 @@ -169,7 +169,7 @@
   * +keymap		'keymap' option.  Allows you to map typed keys in
   *			Insert mode for a special language.
@@ -29,15 +38,6 @@ index 8f7322bef..0a5559444 100644
  	&& !defined(AMIGA)
  # define FEAT_PRINTER
  #endif
-@@ -483,7 +483,7 @@
- /*
-  * +cryptv		Encryption (by Mohsin Ahmed <mosh@sasi.com>).
-  */
--#if defined(FEAT_NORMAL) && !defined(FEAT_CRYPT) || defined(PROTO)
-+#if defined(FEAT_HUGE) && !defined(FEAT_CRYPT) || defined(PROTO)
- # define FEAT_CRYPT
- #endif
- 
 @@ -500,7 +500,7 @@
   * +gettext		Message translations (requires +multi_lang)
   *			(only when "lang" archive unpacked)
@@ -47,6 +47,15 @@ index 8f7322bef..0a5559444 100644
  # define FEAT_MULTI_LANG
  #endif
  #if defined(HAVE_GETTEXT) && defined(FEAT_MULTI_LANG) \
+@@ -704,7 +704,7 @@
+ /*
+  * +vartabs		'vartabstop' and 'varsofttabstop' options.
+  */
+-#ifdef FEAT_BIG
++#ifdef FEAT_HUGE
+ # define FEAT_VARTABS
+ #endif
+ 
 @@ -945,13 +945,13 @@
  // Amiga console has no mouse support
  #if defined(UNIX) || defined(VMS)
@@ -76,5 +85,23 @@ index 8f7322bef..0a5559444 100644
 -#if defined(FEAT_NORMAL) && defined(HAVE_SYSMOUSE)
 +#if defined(FEAT_HUGE) && defined(HAVE_SYSMOUSE)
  # define FEAT_SYSMOUSE
+ #endif
+ 
+@@ -1059,7 +1059,7 @@
+  * cursor shape		Adjust the shape of the cursor to the mode.
+  * mouse shape		Adjust the shape of the mouse pointer to the mode.
+  */
+-#ifdef FEAT_NORMAL
++#ifdef FEAT_HUGE
+ // Win32 console can change cursor shape
+ # if defined(MSWIN) && (!defined(FEAT_GUI_MSWIN) || defined(VIMDLL))
+ #  define MCH_CURSOR_SHAPE
+@@ -1231,7 +1231,7 @@
+ /*
+  * +autochdir		'autochdir' option.
+  */
+-#if defined(FEAT_NETBEANS_INTG) || defined(FEAT_BIG)
++#if defined(FEAT_NETBEANS_INTG) || defined(FEAT_HUGE)
+ # define FEAT_AUTOCHDIR
  #endif
  
