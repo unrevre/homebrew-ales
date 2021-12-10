@@ -1,0 +1,96 @@
+diff --git a/config.h b/config.h
+index 5cb8ae5..65b6698 100644
+--- a/config.h
++++ b/config.h
+@@ -24,7 +24,7 @@
+ #define HAVE_GETOPT_LONG
+ 
+ /* Comment out if your system does not have memrchr(). */
+-#define HAVE_MEMRCHR
++/* #define HAVE_MEMRCHR */
+ 
+ /* The biggest integer type available on the system. */
+ #define BINT_TYPE long long
+diff --git a/libhed/cache.c b/libhed/cache.c
+index 42f71ce..3682c46 100644
+--- a/libhed/cache.c
++++ b/libhed/cache.c
+@@ -74,11 +74,8 @@ cache_init(unsigned nelem, struct swp_file *swp)
+ 
+ 		plink->next = &data->u2.free;
+ 		data->size = FILE_BLOCK_SIZE;
+-		if (FILE_BLOCK_ALLOC) {
+-			data->data = pdata;
+-			pdata += FILE_BLOCK_ALLOC;
+-		} else
+-			data->data = NULL;
++		data->data = pdata;
++		pdata += FILE_BLOCK_ALLOC;
+ 		data->u2.free.prev = plink;
+ 		plink = &data->u2.free;
+ 		*revmap++ = data++;
+diff --git a/libhed/expr.c b/libhed/expr.c
+index 7cc1799..0f036ad 100644
+--- a/libhed/expr.c
++++ b/libhed/expr.c
+@@ -32,7 +32,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <endian.h>
++#include <machine/endian.h>
+ #include <assert.h>
+ 
+ #include <util/numbers.h>
+diff --git a/libhed/file.c b/libhed/file.c
+index c3ddb4a..8772383 100644
+--- a/libhed/file.c
++++ b/libhed/file.c
+@@ -46,7 +46,9 @@
+ #include <string.h>
+ #include <sys/ioctl.h>
+ #include <unistd.h>
+-#include <linux/fs.h>	/* BLKGETSIZE and BLKGETSIZE64 */
++
++#define BLKGETSIZE	_IO(0x12,96)  /* Get device size in 512-byte blocks. */
++#define BLKGETSIZE64	_IOR(0x12,114,size_t)	/* Get device size in bytes. */
+ 
+ #include "file.h"
+ #include "file_priv.h"
+@@ -869,7 +871,7 @@ hed_file_update_size(struct hed_file *f)
+ 	} else if (S_ISCHR(file_stat(file)->st_mode)) {
+ 		if (lseek(file->fd, 0, SEEK_SET) < 0)
+ 			return -1;
+-		file->f.phys_size = (hed_uoff_t)OFF_MAX + 1;
++		file->f.phys_size = (hed_uoff_t)(UOFF_MAX >> 1) + 1;
+ 	} else {
+ 		errno = EINVAL;
+ 		return -1;
+diff --git a/libhed/memrchr.c b/libhed/memrchr.c
+index f8d7472..c120c0b 100644
+--- a/libhed/memrchr.c
++++ b/libhed/memrchr.c
+@@ -22,8 +22,9 @@
+ static void *
+ memrchr(const void *s, int c, size_t n)
+ {
+-	unsigned char *p = s + n;
+-	while (p-- > s)
++	unsigned char *s_ = (unsigned char*)s;
++	unsigned char *p = s_ + n;
++	while (p-- > s_)
+ 		if (*p == (unsigned char)c)
+ 			return p;
+ 	return NULL;
+diff --git a/util/numbers.h b/util/numbers.h
+index 67086c0..5103099 100644
+--- a/util/numbers.h
++++ b/util/numbers.h
+@@ -16,7 +16,6 @@
+  * has only the highest bit clear.
+  */
+ #define UOFF_MAX (~(hed_uoff_t)(0))
+-#define OFF_MAX (hed_off_t)(UOFF_MAX >> 1)
+ 
+ /* The biggest possible integer type. */
+ typedef BINT_TYPE bint;
