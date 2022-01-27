@@ -1,7 +1,7 @@
 class Yabai < Formula
   desc "A tiling window manager for macOS based on binary space partitioning."
   homepage "https://github.com/unrevre/yabai"
-  head "https://github.com/unrevre/yabai.git", :branch => "private"
+  head "https://github.com/unrevre/yabai.git", :branch => "devel"
 
   depends_on :macos => :high_sierra
 
@@ -10,8 +10,7 @@ class Yabai < Formula
     man.mkpath
 
     if build.head?
-      ENV.O2
-      system "make", "install"
+      system "make", "-j1", "install"
     end
 
     bin.install "#{buildpath}/bin/yabai"
