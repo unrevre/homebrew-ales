@@ -6,16 +6,11 @@ class Skhd < Formula
   head "https://github.com/koekeishiya/skhd.git"
 
   def install
-    ENV.O3
     system "make", "install"
 
     bin.install "#{buildpath}/bin/skhd"
 
     (pkgshare/"examples").install "#{buildpath}/examples/skhdrc"
-  end
-
-  def post_install
-    (var/"log/skhd").mkpath
   end
 
   def caveats; <<~EOS
