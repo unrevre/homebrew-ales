@@ -1,8 +1,8 @@
 diff --git a/src/feature.h b/src/feature.h
-index 5f6f800c2..21401dd43 100644
+index 9564f8e10..71882a98b 100644
 --- a/src/feature.h
 +++ b/src/feature.h
-@@ -161,7 +161,7 @@
+@@ -152,7 +152,7 @@
   *			keyboard in a special language mode, e.g. for typing
   *			greek.
   */
@@ -11,7 +11,7 @@ index 5f6f800c2..21401dd43 100644
  # define FEAT_LANGMAP
  #endif
  
-@@ -169,7 +169,7 @@
+@@ -160,7 +160,7 @@
   * +keymap		'keymap' option.  Allows you to map typed keys in
   *			Insert mode for a special language.
   */
@@ -20,7 +20,7 @@ index 5f6f800c2..21401dd43 100644
  # define FEAT_KEYMAP
  #endif
  
-@@ -257,7 +257,7 @@
+@@ -244,7 +244,7 @@
   * +emacs_tags		When FEAT_EMACS_TAGS defined: Include support for
   *			emacs style TAGS file.
   */
@@ -29,7 +29,7 @@ index 5f6f800c2..21401dd43 100644
  # define FEAT_EMACS_TAGS
  #endif
  
-@@ -342,7 +342,7 @@
+@@ -321,7 +321,7 @@
   * +printer		":hardcopy" command
   * +postscript		Printing uses PostScript file output.
   */
@@ -38,7 +38,7 @@ index 5f6f800c2..21401dd43 100644
  	&& !defined(AMIGA)
  # define FEAT_PRINTER
  #endif
-@@ -500,7 +500,7 @@
+@@ -475,7 +475,7 @@
   * +gettext		Message translations (requires +multi_lang)
   *			(only when "lang" archive unpacked)
   */
@@ -47,7 +47,7 @@ index 5f6f800c2..21401dd43 100644
  # define FEAT_MULTI_LANG
  #endif
  #if defined(HAVE_GETTEXT) && defined(FEAT_MULTI_LANG) \
-@@ -704,7 +704,7 @@
+@@ -685,7 +685,7 @@
  /*
   * +vartabs		'vartabstop' and 'varsofttabstop' options.
   */
@@ -56,7 +56,7 @@ index 5f6f800c2..21401dd43 100644
  # define FEAT_VARTABS
  #endif
  
-@@ -945,13 +945,13 @@
+@@ -926,13 +926,13 @@
  // Amiga console has no mouse support
  #if defined(UNIX) || defined(VMS)
  # define FEAT_MOUSE_XTERM
@@ -73,13 +73,17 @@ index 5f6f800c2..21401dd43 100644
  #  define FEAT_MOUSE_URXVT
  # endif
  #endif
-@@ -969,11 +969,11 @@
+@@ -950,7 +950,7 @@
   * FEAT_MOUSE_JSB
   * FEAT_MOUSE_PTERM
   */
 -#if defined(FEAT_NORMAL) && defined(HAVE_GPM)
 +#if defined(FEAT_HUGE) && defined(HAVE_GPM)
  # define FEAT_MOUSE_GPM
+ /*
+  * +mouse_gpm/dyn   Load libgpm dynamically.
+@@ -960,7 +960,7 @@
+ # endif
  #endif
  
 -#if defined(FEAT_NORMAL) && defined(HAVE_SYSMOUSE)
@@ -87,7 +91,7 @@ index 5f6f800c2..21401dd43 100644
  # define FEAT_SYSMOUSE
  #endif
  
-@@ -1059,7 +1059,7 @@
+@@ -1046,7 +1046,7 @@
   * cursor shape		Adjust the shape of the cursor to the mode.
   * mouse shape		Adjust the shape of the mouse pointer to the mode.
   */
@@ -96,7 +100,7 @@ index 5f6f800c2..21401dd43 100644
  // Win32 console can change cursor shape
  # if defined(MSWIN) && (!defined(FEAT_GUI_MSWIN) || defined(VIMDLL))
  #  define MCH_CURSOR_SHAPE
-@@ -1231,7 +1231,7 @@
+@@ -1224,7 +1224,7 @@
  /*
   * +autochdir		'autochdir' option.
   */
