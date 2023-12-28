@@ -19,7 +19,9 @@ class Skhd < Formula
     EOS
   end
 
-  plist_options :manual => "skhd"
+  service do
+    name macos: "#{plist_name}"
+  end
 
   def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
