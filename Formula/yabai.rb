@@ -1,16 +1,16 @@
 class Yabai < Formula
   desc "A tiling window manager for macOS based on binary space partitioning."
   homepage "https://github.com/unrevre/yabai"
-  head "https://github.com/unrevre/yabai.git", :branch => "devel"
+  head "https://github.com/unrevre/yabai.git", :branch => "zsplit"
 
-  depends_on :macos => :high_sierra
+  depends_on :macos => :big_sur
 
   def install
-    (var/"log/yabai").mkpath
     man.mkpath
 
     if build.head?
       system "make", "-j1", "install"
+      system "codesign", "-fs", "-", "#{buildpath}/bin/yabai"
     end
 
     bin.install "#{buildpath}/bin/yabai"
@@ -24,45 +24,23 @@ class Yabai < Formula
       cp #{opt_pkgshare}/examples/yabairc ~/.yabairc
       cp #{opt_pkgshare}/examples/skhdrc ~/.skhdrc
 
-    Logs will be found in
-      #{var}/log/yabai/yabai.[out|err].log
-    EOS
-  end
+    If you want yabai to be managed by launchd (start automatically upon login):
+      yabai --start-service
 
-  service do
-    name macos: "#{plist_name}"
-  end
+    When running as a launchd service logs will be found in:
+      /tmp/yabai_<user>.[out|err].log
 
-  def plist; <<~EOS
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      <key>Label</key>
-      <string>#{plist_name}</string>
-      <key>ProgramArguments</key>
-      <array>
-        <string>#{opt_bin}/yabai</string>
-      </array>
-      <key>EnvironmentVariables</key>
-      <dict>
-        <key>PATH</key>
-        <string>#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
-      </dict>
-      <key>RunAtLoad</key>
-      <true/>
-      <key>KeepAlive</key>
-      <true/>
-      <key>StandardOutPath</key>
-      <string>#{var}/log/yabai/yabai.out.log</string>
-      <key>StandardErrorPath</key>
-      <string>#{var}/log/yabai/yabai.err.log</string>
-    </dict>
-    </plist>
+    If you are using the scripting-addition; remember to update your sudoers file:
+      sudo visudo -f /private/etc/sudoers.d/yabai
+
+    Build the configuration row by running:
+      echo "$(whoami) ALL=(root) NOPASSWD: sha256:$(shasum -a 256 $(\which yabai) | cut -d " " -f 1) $(\which yabai) --load-sa"
+
+    README: https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
     EOS
   end
 
   test do
-    system "true"
+    assert_match "yabai-v#{version}", shell_output("#{bin}/yabai --version")
   end
 end
